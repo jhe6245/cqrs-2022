@@ -1,4 +1,4 @@
-package at.fhv.lab1reference;
+package at.fhv.cqrs;
 
 import eventside.domain.Event;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import writeside.EventPublisher;
+import writeside.EventPublisherImpl;
 
 @SpringBootApplication
 @Configuration
@@ -16,7 +16,7 @@ import writeside.EventPublisher;
 public class WriteSide {
 
     @Autowired
-    private EventPublisher publisher;
+    private EventPublisherImpl publisher;
 
     public static void main(String[] args) {
         SpringApplication.run(WriteSide.class, args);

@@ -1,18 +1,18 @@
 package writeside;
 
 import eventside.domain.Event;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import writeside.domain.EventPublisher;
 
 @Component
-public class EventPublisher {
+public class EventPublisherImpl implements EventPublisher {
 
     private final WebClient localApiClient = WebClient.create("http://localhost:8080");
 
-    public EventPublisher() {
+    public EventPublisherImpl() {
     }
 
     public Boolean publishEvent(Event event) {
