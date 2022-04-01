@@ -1,6 +1,7 @@
 package writeside.application.impl;
 
 import eventside.domain.Event;
+import eventside.domain.EventType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import writeside.application.BookingService;
@@ -35,10 +36,7 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.put(new Booking(bookingNo, customer, from, duration, room));
 
 
-        Event e = new Event();
-        e.setCustomer(customer);
-        e.setTimestamp(System.currentTimeMillis() / 1000L);
-        e.setContent("booked " + bookingNo);
+        Event e = new Event(bookingNo, customer, LocalDateTime.now(), EventType.BOOK, roomNumber, from, duration);
         eventPublisher.publishEvent(e);
     }
 
@@ -49,10 +47,7 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new IllegalArgumentException("invalid booking number"));
         booking.cancel();
 
-        Event e = new Event();
-        e.setCustomer(booking.customer());
-        e.setTimestamp(System.currentTimeMillis() / 1000L);
-        e.setContent("cancelled " + bookingNumber);
+        Event e = new Event(bookingNumber, booking.customer(), LocalDateTime.now(), EventType.CANCEL, booking.room().roomNumber(), booking.from(), booking.duration());
         eventPublisher.publishEvent(e);
     }
 }

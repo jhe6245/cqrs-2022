@@ -8,15 +8,15 @@ public class Booking {
     private String bookingNo;
     private String customer;
     private LocalDateTime from;
-    private Duration length;
+    private Duration duration;
     private Room room;
     private boolean isCancelled;
 
-    public Booking(String bookingNo, String customer, LocalDateTime from, Duration length, Room room) {
+    public Booking(String bookingNo, String customer, LocalDateTime from, Duration duration, Room room) {
         this.bookingNo = bookingNo;
         this.customer = customer;
         this.from = from;
-        this.length = length;
+        this.duration = duration;
         this.room = room;
         this.isCancelled = false;
     }
@@ -34,5 +34,17 @@ public class Booking {
 
     public String customer() {
         return customer;
+    }
+
+    public LocalDateTime from() {
+        return this.from;
+    }
+
+    public Duration duration() {
+        return duration;
+    }
+
+    public Room room() {
+        return room;
     }
 }

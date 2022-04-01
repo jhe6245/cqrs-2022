@@ -1,41 +1,52 @@
 package eventside.domain;
 
+import java.time.*;
+
 public class Event {
 
-    private String customer;
-    private long timestamp;
-    private String content;
+    private final String bookingNo;
+    private final String customer;
+    private final String timestamp;
+    private final String type;
+    private final String room;
+    private final String from;
+    private final String duration;
 
-    public String getCustomer() {
+    public Event(String bookingNo, String customer, LocalDateTime timestamp, EventType type, String room, LocalDateTime from, Duration duration) {
+        this.bookingNo = bookingNo;
+        this.customer = customer;
+        this.timestamp = timestamp.toString();
+        this.type = type.toString();
+        this.room = room;
+        this.from = from.toString();
+        this.duration = duration.toString();
+    }
+
+    public String type() {
+        return type;
+    }
+
+    public String bookingNo() {
+        return bookingNo;
+    }
+
+    public String customer() {
         return customer;
     }
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
-
-    public long getTimestamp() {
+    public String timestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public String room() {
+        return room;
     }
 
-    public String getContent() {
-        return content;
+    public String from() {
+        return from;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    @Override
-    public String toString() {
-        return "Event{" +
-                "customer='" + customer + '\'' +
-                ", timestamp=" + timestamp +
-                ", content='" + content + '\'' +
-                '}';
+    public String duration() {
+        return duration;
     }
 }
