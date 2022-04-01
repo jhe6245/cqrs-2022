@@ -1,8 +1,8 @@
-package readside;
+package eventside;
 
 import eventside.domain.Event;
 
 public interface EventConsumer {
 
-    void consume(Event event);
+    Boolean consume(Event event);
 }

@@ -1,18 +1,20 @@
 package readside;
 
+import eventside.EventConsumer;
 import eventside.domain.Event;
-import readside.repo.BookingRepository;
-import readside.repo.RoomRepository;
+import org.springframework.stereotype.Component;
+import readside.repo.BookingReadRepo;
+import readside.repo.RoomReadRepo;
 
+@Component
 public class EventConsumerImpl implements EventConsumer {
 
-    private BookingRepository bookings;
-    private RoomRepository rooms;
+    private BookingReadRepo bookings;
+    private RoomReadRepo rooms;
 
     @Override
-    public void consume(Event event) {
-        switch(event.type()) {
-
-        }
+    public Boolean consume(Event event) {
+        bookings.consume(event);
+        return true;
     }
 }
