@@ -12,7 +12,7 @@ public class EventConsumerRestController {
     @Autowired
     private EventConsumer consumer;
 
-    @PostMapping(value = "/consume-event", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/consume", consumes = "application/json", produces = "application/json")
     public void consume(@RequestBody Event event) {
         consumer.consume(event);
     }
