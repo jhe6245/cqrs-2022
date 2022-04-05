@@ -2,6 +2,7 @@ package readside.repo.impl;
 
 import eventside.domain.Event;
 import eventside.domain.EventType;
+import org.springframework.stereotype.Repository;
 import readside.domain.Room;
 import readside.repo.RoomReadRepo;
 
@@ -14,6 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Repository
 public class RoomReadRepoImpl implements RoomReadRepo {
 
     static class Occupancy {
@@ -50,15 +52,15 @@ public class RoomReadRepoImpl implements RoomReadRepo {
     private Set<Occupancy> occupancies = new HashSet<>();
 
     @Override
-    public Set<Room> getFreeRooms(LocalDate from, Period period, int numberOfGuests) {
+    public Set<Room> getFreeRooms(LocalDateTime from, Duration duration, int numberOfGuests) {
 
         var largeEnoughRooms = allRooms.stream()
                 .filter(p -> p.getMaxGuests() >= numberOfGuests)
                 .collect(Collectors.toSet());
 
         var notFreeRooms = occupancies.stream()
-                .filter(p -> p.getEndDate().isAfter(ChronoLocalDateTime.from(from))
-                        && p.getStartDate().isBefore(ChronoLocalDateTime.from(from.plus(period))))
+                .filter(p -> p.getEndDate().isAfter(from)
+                        && p.getStartDate().isBefore(from.plus(duration)))
                 .map(Occupancy::getRoom)
                 .collect(Collectors.toSet());
 

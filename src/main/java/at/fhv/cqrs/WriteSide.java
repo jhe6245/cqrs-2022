@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import writeside.EventPublisherImpl;
+import writeside.application.BookingService;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -22,16 +23,16 @@ import java.time.LocalTime;
 public class WriteSide {
 
     @Autowired
-    private EventPublisherImpl publisher;
+    private BookingService bookingService;
 
     public static void main(String[] args) {
         SpringApplication.run(WriteSide.class, args);
     }
 
     @Bean
-    public CommandLineRunner run() throws Exception {
+    public CommandLineRunner run() {
         return args -> {
-            Event event = new Event(
+            /*Event event = new Event(
                     "test-1234",
                     "fritz",
                     LocalDateTime.now(),
@@ -40,7 +41,19 @@ public class WriteSide {
                     LocalDateTime.of(LocalDate.of(2022, 4, 10), LocalTime.of(8,0)),
                     Duration.ofDays(7));
 
-            System.out.println("Result: " + publisher.publishEvent(event));
+            System.out.println("Result: " + publisher.publishEvent(event));*/
+
+            bookingService.bookRoom(
+                    LocalDateTime.of(2022, 4, 10, 8, 0),
+                    Duration.ofDays(3),
+                    "2",
+                    "max");
+
+            bookingService.bookRoom(
+                    LocalDateTime.of(2022, 4, 15, 8, 0),
+                    Duration.ofDays(5),
+                    "3",
+                    "max");
         };
     }
 }

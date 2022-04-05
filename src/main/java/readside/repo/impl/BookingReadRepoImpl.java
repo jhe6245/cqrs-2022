@@ -62,7 +62,7 @@ public class BookingReadRepoImpl implements BookingReadRepo {
         long days = ChronoUnit.DAYS.between(from, from.plus(period));
 
         for(long dayOffset = 0; dayOffset <= days; dayOffset++) {
-            bookings.addAll(readModel.get(from.plusDays(dayOffset)));
+            bookings.addAll(readModel.getOrDefault(from.plusDays(dayOffset), Set.of()));
         }
 
         return bookings;

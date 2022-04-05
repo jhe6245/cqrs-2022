@@ -15,12 +15,13 @@ public class EventConsumerImpl implements EventConsumer {
     @Autowired
     private BookingReadRepo bookings;
 
-    //@Autowired
-    //private RoomReadRepo rooms;
+    @Autowired
+    private RoomReadRepo rooms;
 
     @Override
     public Boolean consume(Event event) {
         bookings.consume(event);
+        rooms.consume(event);
         return true;
     }
 
