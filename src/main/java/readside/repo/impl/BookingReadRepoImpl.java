@@ -35,9 +35,8 @@ public class BookingReadRepoImpl implements BookingReadRepo {
 
     public void consume(Event e) {
 
-
         if(e.type() == EventType.BOOK) {
-            Booking b = new Booking(e.getBookingNo());
+            Booking b = new Booking(e.getBookingNo(), e.getCustomer());
 
             for(LocalDate d: daysBetween(e.from(), e.duration())) {
                 Set<Booking> existingBookings = readModel.getOrDefault(d, null);
