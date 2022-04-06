@@ -24,10 +24,6 @@ public class Event {
         this.until = until;
     }
 
-    public EventType type() {
-        return type;
-    }
-
     public EventType getType() {
         return type;
     }
