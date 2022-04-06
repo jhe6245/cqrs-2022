@@ -4,38 +4,36 @@ import java.time.*;
 
 public class Event {
 
+    private final EventType type;
+    private final LocalDateTime timestamp;
+
     private final String bookingNo;
     private final String customer;
-    private final LocalDateTime timestamp;
-    private final EventType type;
     private final String room;
-    private final LocalDateTime from;
-    private final Duration duration;
 
-    public Event(String bookingNo, String customer, LocalDateTime timestamp, EventType type, String room, LocalDateTime from, Duration duration) {
+    private final LocalDateTime from;
+    private final LocalDateTime until;
+
+    public Event(EventType type, LocalDateTime timestamp, String bookingNo, String customer, String room, LocalDateTime from, LocalDateTime until) {
+        this.type = type;
+        this.timestamp = timestamp;
         this.bookingNo = bookingNo;
         this.customer = customer;
-        this.timestamp = timestamp;
-        this.type = type;
         this.room = room;
         this.from = from;
-        this.duration = duration;
-    }
-
-    public LocalDateTime timestamp() {
-        return timestamp;
+        this.until = until;
     }
 
     public EventType type() {
         return type;
     }
 
-    public LocalDateTime from() {
-        return from;
+    public EventType getType() {
+        return type;
     }
 
-    public Duration duration() {
-        return duration;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
     public String getBookingNo() {
@@ -46,36 +44,15 @@ public class Event {
         return customer;
     }
 
-    public String getTimestamp() {
-        return timestamp.toString();
-    }
-
-    public String getType() {
-        return type.toString();
-    }
-
     public String getRoom() {
         return room;
     }
 
-    public String getFrom() {
-        return from.toString();
+    public LocalDateTime getFrom() {
+        return from;
     }
 
-    public String getDuration() {
-        return duration.toString();
-    }
-
-    @Override
-    public String toString() {
-        return "Event{" +
-                "bookingNo='" + bookingNo + '\'' +
-                ", customer='" + customer + '\'' +
-                ", timestamp='" + timestamp + '\'' +
-                ", type='" + type + '\'' +
-                ", room='" + room + '\'' +
-                ", from='" + from + '\'' +
-                ", duration='" + duration + '\'' +
-                '}';
+    public LocalDateTime getUntil() {
+        return until;
     }
 }

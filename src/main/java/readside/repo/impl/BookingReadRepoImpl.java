@@ -13,19 +13,17 @@ import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 @Repository
 public class BookingReadRepoImpl implements BookingReadRepo {
 
     private final Map<LocalDate, Set<Booking>> readModel = new HashMap<>();
 
-    private static List<LocalDate> daysBetween(LocalDateTime from, Duration duration) {
+    private static List<LocalDate> daysBetween(LocalDateTime from, LocalDateTime until) {
 
         LocalDate firstDay = from.toLocalDate();
-        LocalDate lastDay = from.plus(duration).toLocalDate();
+        LocalDate lastDay = until.toLocalDate();
 
         long numberOfDays = ChronoUnit.DAYS.between(firstDay, lastDay);
 
@@ -38,7 +36,7 @@ public class BookingReadRepoImpl implements BookingReadRepo {
         if(e.type() == EventType.BOOK) {
             Booking b = new Booking(e.getBookingNo(), e.getCustomer());
 
-            for(LocalDate d: daysBetween(e.from(), e.duration())) {
+            for(LocalDate d: daysBetween(e.getFrom(), e.getUntil())) {
                 Set<Booking> existingBookings = readModel.getOrDefault(d, null);
 
                 if(existingBookings != null)
@@ -48,8 +46,8 @@ public class BookingReadRepoImpl implements BookingReadRepo {
             }
         }
         else if(e.type() == EventType.CANCEL) {
-            for(LocalDate d: daysBetween(e.from(), e.duration())) {
-                readModel.get(d).removeIf(b -> b.bookingNo().equals(e.getBookingNo()));
+            for(LocalDate d: daysBetween(e.getFrom(), e.getUntil())) {
+                readModel.get(d).removeIf(b -> b.getBookingNo().equals(e.getBookingNo()));
             }
         }
     }

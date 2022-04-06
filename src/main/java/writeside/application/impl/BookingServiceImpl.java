@@ -36,7 +36,7 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.put(new Booking(bookingNo, customer, from, duration, room));
 
 
-        Event e = new Event(bookingNo, customer, LocalDateTime.now(), EventType.BOOK, roomNumber, from, duration);
+        Event e = new Event(EventType.BOOK, LocalDateTime.now(), bookingNo, customer, roomNumber, from, from.plus(duration));
         eventPublisher.publishEvent(e);
     }
 
@@ -47,7 +47,8 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new IllegalArgumentException("invalid booking number"));
         booking.cancel();
 
-        Event e = new Event(bookingNumber, booking.customer(), LocalDateTime.now(), EventType.CANCEL, booking.room().roomNumber(), booking.from(), booking.duration());
+        Event e = new Event(EventType.CANCEL, LocalDateTime.now(), booking.bookingNumber(), booking.customer(), booking.room().roomNumber(), booking.from(), booking.until());
+
         eventPublisher.publishEvent(e);
     }
 }

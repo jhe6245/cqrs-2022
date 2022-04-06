@@ -44,6 +44,10 @@ public class Booking {
         return duration;
     }
 
+    public LocalDateTime until() {
+        return from.plus(duration);
+    }
+
     public Room room() {
         return room;
     }
