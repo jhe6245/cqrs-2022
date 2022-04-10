@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import writeside.application.BookingService;
 import writeside.domain.Booking;
-import writeside.domain.EventPublisher;
+import eventside.EventPublisher;
 import writeside.domain.Room;
-import writeside.domain.repo.BookingRepository;
-import writeside.domain.repo.RoomRepository;
+import writeside.domain.repo.BookingWriteRepo;
+import writeside.domain.repo.RoomWriteRepo;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -20,20 +20,20 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private EventPublisher eventPublisher;
     @Autowired
-    private BookingRepository bookingRepository;
+    private BookingWriteRepo bookingWriteRepo;
     @Autowired
-    private RoomRepository roomRepository;
+    private RoomWriteRepo roomWriteRepo;
 
     @Override
     public void bookRoom(LocalDateTime from, Duration duration, String roomNumber, String customer) {
 
-        Room room = roomRepository
+        Room room = roomWriteRepo
                 .find(roomNumber)
                 .orElseThrow(() -> new IllegalArgumentException("invalid room number"));
 
         String bookingNo = customer.toLowerCase().split(" ")[0] + new Random().nextInt(1000);
 
-        bookingRepository.put(new Booking(bookingNo, customer, from, duration, room));
+        bookingWriteRepo.put(new Booking(bookingNo, customer, from, duration, room));
 
 
         Event e = new Event(EventType.BOOK, LocalDateTime.now(), bookingNo, customer, roomNumber, from, from.plus(duration));
@@ -42,7 +42,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void cancel(String bookingNumber) {
-        Booking booking = bookingRepository
+        Booking booking = bookingWriteRepo
                 .find(bookingNumber)
                 .orElseThrow(() -> new IllegalArgumentException("invalid booking number"));
         booking.cancel();

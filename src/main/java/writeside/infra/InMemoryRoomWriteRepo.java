@@ -2,14 +2,14 @@ package writeside.infra;
 
 import org.springframework.stereotype.Repository;
 import writeside.domain.Room;
-import writeside.domain.repo.RoomRepository;
+import writeside.domain.repo.RoomWriteRepo;
 
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
 @Repository
-public class InMemoryRoomRepository implements RoomRepository {
+public class InMemoryRoomWriteRepo implements RoomWriteRepo {
 
     private final Collection<Room> rooms = Set.of(
             new Room("1", 4),

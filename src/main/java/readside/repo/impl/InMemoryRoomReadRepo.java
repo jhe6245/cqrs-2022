@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
-public class RoomReadRepoImpl implements RoomReadRepo {
+public class InMemoryRoomReadRepo implements RoomReadRepo {
 
     static class Occupancy {
 
@@ -65,12 +65,12 @@ public class RoomReadRepoImpl implements RoomReadRepo {
     @Override
     public void consume(Event e) {
 
-        if(e.type() == EventType.BOOK) {
+        if(e.getType() == EventType.BOOK) {
 
             var room = allRooms.stream().filter(p -> p.getRoomNo().equals(e.getRoom())).findFirst().orElseThrow();
             occupancies.add(new Occupancy(e.getFrom(), e.getUntil(), room));
 
-        } else if(e.type() == EventType.CANCEL) {
+        } else if(e.getType() == EventType.CANCEL) {
 
             occupancies.removeIf(p -> p.getFrom().equals(e.getFrom()) &&
                     (p.getUntil().equals(e.getUntil())) &&

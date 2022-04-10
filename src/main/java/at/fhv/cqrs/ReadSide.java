@@ -21,9 +21,7 @@ public class ReadSide {
 
     @Bean
     public CommandLineRunner run() {
-        return args -> {
-            eventConsumer.subscribe("http://localhost:8080");
-        };
+        return args -> eventConsumer.subscribe("http://localhost:8080");
     }
 
 }

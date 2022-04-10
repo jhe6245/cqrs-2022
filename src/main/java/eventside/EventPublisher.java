@@ -1,4 +1,4 @@
-package writeside.domain;
+package eventside;
 
 import eventside.domain.Event;
 

@@ -1,4 +1,4 @@
-package readside;
+package readside.rest;
 
 import eventside.EventConsumer;
 import eventside.domain.Event;
@@ -10,7 +10,7 @@ import readside.repo.RoomReadRepo;
 
 
 @Component
-public class EventConsumerImpl implements EventConsumer {
+public class RestEventConsumer implements EventConsumer {
 
     @Autowired
     private BookingReadRepo bookings;

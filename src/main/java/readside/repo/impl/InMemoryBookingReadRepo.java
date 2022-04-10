@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
 @Repository
-public class BookingReadRepoImpl implements BookingReadRepo {
+public class InMemoryBookingReadRepo implements BookingReadRepo {
 
     private final Map<LocalDate, Set<Booking>> readModel = new HashMap<>();
 
@@ -33,7 +33,7 @@ public class BookingReadRepoImpl implements BookingReadRepo {
 
     public void consume(Event e) {
 
-        if(e.type() == EventType.BOOK) {
+        if(e.getType() == EventType.BOOK) {
             Booking b = new Booking(e.getBookingNo(), e.getCustomer());
 
             for(LocalDate d: daysBetween(e.getFrom(), e.getUntil())) {
@@ -45,7 +45,7 @@ public class BookingReadRepoImpl implements BookingReadRepo {
                     readModel.put(d, new HashSet<>(Set.of(b)));
             }
         }
-        else if(e.type() == EventType.CANCEL) {
+        else if(e.getType() == EventType.CANCEL) {
             for(LocalDate d: daysBetween(e.getFrom(), e.getUntil())) {
                 readModel.get(d).removeIf(b -> b.getBookingNo().equals(e.getBookingNo()));
             }
