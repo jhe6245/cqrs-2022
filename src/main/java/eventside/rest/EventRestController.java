@@ -13,7 +13,7 @@ public class EventRestController {
 
     @GetMapping(value = "subscribe", produces = "application/json")
     public boolean subscribe(@RequestParam String uri) {
-        repository.subscribe(new EventConsumerRestProxy(uri));
+        repository.addSubscriber(new EventConsumerRestProxy(uri));
         System.out.println("Added subscriber: " + uri);
         return true;
     }

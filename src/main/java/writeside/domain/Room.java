@@ -2,9 +2,8 @@ package writeside.domain;
 
 public class Room {
 
-    private String roomNumber;
-
-    private int maxGuests;
+    private final String roomNumber;
+    private final int maxGuests;
 
     public Room(String roomNumber, int maxGuests) {
         this.roomNumber = roomNumber;

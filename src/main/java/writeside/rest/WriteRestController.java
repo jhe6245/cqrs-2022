@@ -25,4 +25,10 @@ public class WriteRestController {
 
         bookingService.bookRoom(from, Duration.between(from, until), room, customer);
     }
+
+    @PostMapping(value = "cancel-booking")
+    public void cancelBooking(@RequestParam String booking) {
+
+        bookingService.cancel(booking);
+    }
 }

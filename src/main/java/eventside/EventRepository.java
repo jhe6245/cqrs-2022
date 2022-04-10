@@ -11,17 +11,15 @@ import java.util.Set;
 @Component
 public class EventRepository {
 
-    private List<Event> events = new ArrayList<>();
-    private Set<EventConsumer> consumers = new HashSet<>();
+    private final List<Event> events = new ArrayList<>();
+    private final Set<EventConsumer> consumers = new HashSet<>();
 
-    public void subscribe(EventConsumer consumer) {
+    public void addSubscriber(EventConsumer consumer) {
         consumers.add(consumer);
     }
 
     public void processEvent(Event event) {
         events.add(event);
-
-        for(EventConsumer c: consumers)
-            c.consume(event);
+        consumers.forEach(c -> c.consume(event));
     }
 }

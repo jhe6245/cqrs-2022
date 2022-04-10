@@ -30,7 +30,6 @@ public class InMemoryBookingReadRepo implements BookingReadRepo {
         return LongStream.range(0, numberOfDays + 1).mapToObj(firstDay::plusDays).collect(Collectors.toList());
     }
 
-
     public void consume(Event e) {
 
         if(e.getType() == EventType.BOOK) {

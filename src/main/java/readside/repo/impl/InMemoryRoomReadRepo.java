@@ -40,9 +40,9 @@ public class InMemoryRoomReadRepo implements RoomReadRepo {
         }
     }
 
-    private Set<Room> allRooms = Set.of(new Room("1", 4),new Room("2", 4), new Room("3", 3));
+    private final Set<Room> allRooms = Set.of(new Room("1", 4),new Room("2", 4), new Room("3", 3));
 
-    private Set<Occupancy> occupancies = new HashSet<>();
+    private final Set<Occupancy> occupancies = new HashSet<>();
 
     @Override
     public Set<Room> getFreeRooms(LocalDateTime from, Duration duration, int numberOfGuests) {
@@ -51,13 +51,12 @@ public class InMemoryRoomReadRepo implements RoomReadRepo {
                 .filter(p -> p.getMaxGuests() >= numberOfGuests)
                 .collect(Collectors.toSet());
 
-        var notFreeRooms = occupancies.stream()
-                .filter(p -> p.getUntil().isAfter(from)
-                        && p.getFrom().isBefore(from.plus(duration)))
+        var occupiedRooms = occupancies.stream()
+                .filter(p -> p.getUntil().isAfter(from) && p.getFrom().isBefore(from.plus(duration)))
                 .map(Occupancy::getRoom)
                 .collect(Collectors.toSet());
 
-        largeEnoughRooms.removeAll(notFreeRooms);
+        largeEnoughRooms.removeAll(occupiedRooms);
 
         return largeEnoughRooms;
     }
@@ -67,14 +66,14 @@ public class InMemoryRoomReadRepo implements RoomReadRepo {
 
         if(e.getType() == EventType.BOOK) {
 
-            var room = allRooms.stream().filter(p -> p.getRoomNo().equals(e.getRoom())).findFirst().orElseThrow();
+            var room = allRooms.stream().filter(p -> p.getRoomNo().equals(e.getRoomNo())).findFirst().orElseThrow();
             occupancies.add(new Occupancy(e.getFrom(), e.getUntil(), room));
 
         } else if(e.getType() == EventType.CANCEL) {
 
-            occupancies.removeIf(p -> p.getFrom().equals(e.getFrom()) &&
-                    (p.getUntil().equals(e.getUntil())) &&
-                    (p.getRoom().getRoomNo().equals(e.getRoom())));
+            occupancies.removeIf(p -> p.getFrom().equals(e.getFrom())
+                    && (p.getUntil().equals(e.getUntil()))
+                    && (p.getRoom().getRoomNo().equals(e.getRoomNo())));
 
         }
 

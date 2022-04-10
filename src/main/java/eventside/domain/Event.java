@@ -9,17 +9,17 @@ public class Event {
 
     private final String bookingNo;
     private final String customer;
-    private final String room;
+    private final String roomNo;
 
     private final LocalDateTime from;
     private final LocalDateTime until;
 
-    public Event(EventType type, LocalDateTime timestamp, String bookingNo, String customer, String room, LocalDateTime from, LocalDateTime until) {
+    public Event(EventType type, LocalDateTime timestamp, String bookingNo, String customer, String roomNo, LocalDateTime from, LocalDateTime until) {
         this.type = type;
         this.timestamp = timestamp;
         this.bookingNo = bookingNo;
         this.customer = customer;
-        this.room = room;
+        this.roomNo = roomNo;
         this.from = from;
         this.until = until;
     }
@@ -40,8 +40,8 @@ public class Event {
         return customer;
     }
 
-    public String getRoom() {
-        return room;
+    public String getRoomNo() {
+        return roomNo;
     }
 
     public LocalDateTime getFrom() {

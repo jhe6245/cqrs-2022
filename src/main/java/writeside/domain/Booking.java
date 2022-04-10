@@ -5,11 +5,11 @@ import java.time.LocalDateTime;
 
 public class Booking {
 
-    private String bookingNo;
-    private String customer;
-    private LocalDateTime from;
-    private Duration duration;
-    private Room room;
+    private final String bookingNo;
+    private final String customer;
+    private final LocalDateTime from;
+    private final Duration duration;
+    private final Room room;
     private boolean isCancelled;
 
     public Booking(String bookingNo, String customer, LocalDateTime from, Duration duration, Room room) {
